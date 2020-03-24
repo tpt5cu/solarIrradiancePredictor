@@ -22,26 +22,26 @@ returns: cloud cover percentage
 #Exclude minutely, currently, daily, alerts
 #Get Cloud Data
 def getDarkSkyCloudCoverForYear(year, lat, lon, key, units='si'):
-    cloudCoverByHour = {}
-    coords = '%0.2f,%0.2f' % (lat, lon)
-    times = list(pd.date_range('{}-01-01'.format(year), '{}-12-31'.format(year), freq='D'))
-    while times:
-        time = times.pop(0)
-        print(time)
-        url = 'https://api.darksky.net/forecast/%s/%s,%s?exclude=daily,alerts,minutely,currently&units=%s' % (key, coords, time.isoformat(), units ) 
-        res = requests.get(url).json()
-        try:
-            dayData = res['hourly']['data']
-        except KeyError:
-        	print("No day data!!!!!!")
-            continue
-        for hour in dayData:
-            try:
-                cloudCoverByHour[hour['time']] = hour['cloudCover']
-            except KeyError:
-            	print("No Cloud Cover Data")
-                pass
-    return cloudCoverByHour
+	cloudCoverByHour = {}
+	coords = '%0.2f,%0.2f' % (lat, lon)
+	times = list(pd.date_range('{}-01-01'.format(year), '{}-12-31'.format(year), freq='D'))
+	while times:
+		time = times.pop(0)
+		print(time)
+		url = 'https://api.darksky.net/forecast/%s/%s,%s?exclude=daily,alerts,minutely,currently&units=%s' % (key, coords, time.isoformat(), units ) 
+		res = requests.get(url).json()
+		try:
+			dayData = res['hourly']['data']
+		except KeyError:
+			print("No day data!!!!!!")
+			continue
+		for hour in dayData:
+			try:
+				cloudCoverByHour[hour['time']] = hour['cloudCover']
+			except KeyError:
+				print("No Cloud Cover Data")
+				pass
+	return cloudCoverByHour
 
 def writeCloudsToCsv(year, cloudsForTheYear, filepath):
 #See the results in a .csv
@@ -122,13 +122,11 @@ def readFromDiskAndMakeDf(year):
 	df=makeDb(cloudsForTheYear)
 	return df
 
-def pipeline(year, sourceDataName, targetDataFileName):
+def pipeline(lat, lon, year, sourceDataName, targetDataFileName):
 	_key = '31dac4830187f562147a946529516a8d'
 	_cwd = os.getcwd()
 	_Raw_Data = os.path.join(_cwd, 'Raw_Data')
 	_Testing_Data = os.path.join(_cwd, 'Testing_Data')
-	lat = 38.0086
-	lon = -78.4532
 	cloudsForTheYear = getDarkSkyCloudCoverForYear(year, lat, lon, _key, units='si')
 	writeCloudsToCsv(year, cloudsForTheYear, os.path.join(_Testing_Data, targetDataFileName))
 	df = makeDb(cloudsForTheYear, os.path.join(_Raw_Data, sourceDataName), os.path.join(_Testing_Data, targetDataFileName))
@@ -137,7 +135,8 @@ def pipeline(year, sourceDataName, targetDataFileName):
 
 if __name__ == "__main__":
 	year = 2018
-	pipeline(year, 'RAW_psm_VA_Charlottesville'+str(year)+'.csv', 'Charlottesville_psm_'+str(year)+'.csv')
+	# pipeline(,, year, 'RAW_psm_VA_Charlottesville'+str(year)+'.csv', 'Charlottesville_psm_'+str(year)+'.csv')
+	pipeline(30.581736, -98.024098, year, 'RAW_psm_TX_Austin'+str(year)+'.csv', 'Austin_psm_'+str(year)+'.csv')
 	# cloudsForTheYear = getDarkSkyCloudCoverForYear(year, lat, lon, key, units='si')
 	# writeCloudsToCsv(year, cloudsForTheYear)
 	# df = makeDb(cloudsForTheYear, filename)
