@@ -45,7 +45,9 @@ def getDarkSkyCloudCoverForYear(year, lat, lon, key, units='si'):
 
 def writeCloudsToCsv(year, cloudsForTheYear, filepath):
 #See the results in a .csv
-	filename = filepath.strip('.csv') + '_cloud_output_darksky_'
+	idx = filepath.rfind('/')
+	filename = filepath[:idx+1]
+	filename += '_cloud_output_darksky_'
 	w = csv.writer(open(filename+str(year)+".csv", "w"))
 	for key, val in cloudsForTheYear.items():
 		w.writerow([key, val])
@@ -122,21 +124,34 @@ def readFromDiskAndMakeDf(year):
 	df=makeDb(cloudsForTheYear)
 	return df
 
-def pipeline(lat, lon, year, sourceDataName, targetDataFileName):
+def pipeline(lat, lon, year, sourcePath, targetPath):
 	_key = '31dac4830187f562147a946529516a8d'
 	_cwd = os.getcwd()
-	_Raw_Data = os.path.join(_cwd, 'Raw_Data')
-	_Testing_Data = os.path.join(_cwd, 'Testing_Data')
+	# _Raw_Data = os.path.join(_cwd, 'Raw_Data')
+	# _Testing_Data = os.path.join(_cwd, 'Testing_Data')
 	cloudsForTheYear = getDarkSkyCloudCoverForYear(year, lat, lon, _key, units='si')
-	writeCloudsToCsv(year, cloudsForTheYear, os.path.join(_Testing_Data, targetDataFileName))
-	df = makeDb(cloudsForTheYear, os.path.join(_Raw_Data, sourceDataName), os.path.join(_Testing_Data, targetDataFileName))
+	writeCloudsToCsv(year, cloudsForTheYear, targetPath)
+	df = makeDb(cloudsForTheYear, sourcePath, targetPath)
 	print("db finished!")
 
 
 if __name__ == "__main__":
-	year = 2018
+	# year = 2018
 	# pipeline(,, year, 'RAW_psm_VA_Charlottesville'+str(year)+'.csv', 'Charlottesville_psm_'+str(year)+'.csv')
-	pipeline(30.581736, -98.024098, year, 'RAW_psm_TX_Austin'+str(year)+'.csv', 'Austin_psm_'+str(year)+'.csv')
+	_rawDataPath = os.path.join(os.getcwd(), 'Raw_Data')
+	_TestingPath = os.path.join(os.getcwd(), 'Testing_Data')
+	for i in os.listdir(os.path.join(_rawDataPath, 'Charlottesville')):
+		if i.endswith('csv'):
+			sourcePath = (os.path.join(_rawDataPath,'Charlottesville',i))
+			print(sourcePath)
+			targetPath = os.path.join(_TestingPath,'Charlottesville', i[4:])
+			print(targetPath)
+			year = int(i[-8:-4])
+			pipeline(38.0086,-78.4532, year, sourcePath, targetPath)
+	# print(os.listdir(_Raw_Data_Dir))
+	print("DONE")
+
+	# pipeline(30.581736, -98.024098, year, 'RAW_psm_TX_Austin'+str(year)+'.csv', 'Austin_psm_'+str(year)+'.csv')
 	# cloudsForTheYear = getDarkSkyCloudCoverForYear(year, lat, lon, key, units='si')
 	# writeCloudsToCsv(year, cloudsForTheYear)
 	# df = makeDb(cloudsForTheYear, filename)
