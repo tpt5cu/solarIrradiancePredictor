@@ -134,28 +134,81 @@ def pipeline(lat, lon, year, sourcePath, targetPath):
 	df = makeDb(cloudsForTheYear, sourcePath, targetPath)
 	print("db finished!")
 
-
-if __name__ == "__main__":
-	# year = 2018
-	# pipeline(,, year, 'RAW_psm_VA_Charlottesville'+str(year)+'.csv', 'Charlottesville_psm_'+str(year)+'.csv')
+def driver(dirName, lat, lon):
 	_rawDataPath = os.path.join(os.getcwd(), 'Raw_Data')
 	_TestingPath = os.path.join(os.getcwd(), 'Testing_Data')
-	for i in os.listdir(os.path.join(_rawDataPath, 'Charlottesville')):
+	if not os.path.exists(os.path.join(_TestingPath, dirName)):
+		os.mkdir(os.path.join(_TestingPath,dirName))
+		print("Directory " , os.path.join(_TestingPath,dirName) ,  " Created ")
+	else:
+		print("Directory " , os.path.join(_TestingPath,dirName) ,  " already exists ")
+
+	for i in os.listdir(os.path.join(_rawDataPath, dirName)):
 		if i.endswith('csv'):
-			sourcePath = (os.path.join(_rawDataPath,'Charlottesville',i))
+			sourcePath = (os.path.join(_rawDataPath,dirName,i))
 			print(sourcePath)
-			targetPath = os.path.join(_TestingPath,'Charlottesville', i[4:])
+			targetPath = os.path.join(_TestingPath,dirName, i[4:])
 			print(targetPath)
 			year = int(i[-8:-4])
-			pipeline(38.0086,-78.4532, year, sourcePath, targetPath)
-	# print(os.listdir(_Raw_Data_Dir))
+			pipeline(lat,lon, year, sourcePath, targetPath)
 	print("DONE")
 
-	# pipeline(30.581736, -98.024098, year, 'RAW_psm_TX_Austin'+str(year)+'.csv', 'Austin_psm_'+str(year)+'.csv')
-	# cloudsForTheYear = getDarkSkyCloudCoverForYear(year, lat, lon, key, units='si')
-	# writeCloudsToCsv(year, cloudsForTheYear)
-	# df = makeDb(cloudsForTheYear, filename)
-	# print("db finished!")
+
+
+
+if __name__ == "__main__":
+	_rawDataPath = os.path.join(os.getcwd(), 'Raw_Data')
+	_TestingPath = os.path.join(os.getcwd(), 'Testing_Data')
+	#PipeLine for Everglades, Florida
+	driver('Everglades_FL', 26.004157 ,-81.119239)
+	#Pipeline for Charlottesville
+	# if not os.path.exists(os.path.join(_TestingPath,'Charlottesville')):
+	# 	os.mkdir(os.path.join(_TestingPath,'Charlottesville'))
+	# 	print("Directory " , os.path.join(_TestingPath,'Charlottesville') ,  " Created ")
+	# else:    
+	# 	print("Directory " , os.path.join(_TestingPath,'Charlottesville') ,  " already exists")
+	# for i in os.listdir(os.path.join(_rawDataPath, 'Charlottesville')):
+	# 	if i.endswith('csv'):
+	# 		sourcePath = (os.path.join(_rawDataPath,'Charlottesville',i))
+	# 		print(sourcePath)
+	# 		targetPath = os.path.join(_TestingPath,'Charlottesville', i[4:])
+	# 		print(targetPath)
+	# 		year = int(i[-8:-4])
+	# 		pipeline(38.0086,-78.4532, year, sourcePath, targetPath)
+	# print("DONE")
+	# #Pipeline for Austin_TX
+	# if not os.path.exists(os.path.join(_TestingPath,'Austin_TX')):
+	# 	os.mkdir(os.path.join(_TestingPath,'Austin_TX'))
+	# 	print("Directory " , os.path.join(_TestingPath,'Austin_TX') ,  " Created ")
+	# else:    
+	# 	print("Directory " , os.path.join(_TestingPath,'Austin_TX') ,  " already exists")
+	# for i in os.listdir(os.path.join(_rawDataPath, 'Austin_TX')):
+	# 	if i.endswith('csv'):
+	# 		sourcePath = (os.path.join(_rawDataPath,'Austin_TX',i))
+	# 		print(sourcePath)
+	# 		targetPath = os.path.join(_TestingPath,'Austin_TX', i[4:])
+	# 		print(targetPath)
+	# 		year = int(i[-8:-4])
+	# 		print(year)
+	# 		pipeline(30.581736,-98.024098, year, sourcePath, targetPath)
+	# print("DONE")
+	#Pipeline for Spokane_WA
+	# Create target Directory if don't exist
+	# if not os.path.exists(os.path.join(_TestingPath,'Spokane_WA')):
+	# 	os.mkdir(os.path.join(_TestingPath,'Spokane_WA'))
+	# 	print("Directory " , os.path.join(_TestingPath,'Spokane_WA') ,  " Created ")
+	# else:    
+	# 	print("Directory " , os.path.join(_TestingPath,'Spokane_WA') ,  " already exists")
+	# for i in os.listdir(os.path.join(_rawDataPath, 'Spokane_WA')):
+	# 	if i.endswith('csv'):
+	# 		sourcePath = (os.path.join(_rawDataPath,'Spokane_WA',i))
+	# 		print(sourcePath)
+	# 		targetPath = os.path.join(_TestingPath,'Spokane_WA', i[4:])
+	# 		print(targetPath)
+	# 		year = int(i[-8:-4])
+	# 		print(year)
+	# 		pipeline(47.41,-117.52, year, sourcePath, targetPath)
+
 
 	
 
