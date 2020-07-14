@@ -21,6 +21,15 @@ returns: cloud cover percentage
 """
 #Exclude minutely, currently, daily, alerts
 #Get Cloud Data
+"""
+Stores results in a hashtable form {datetime: cloudcover}
+this is done because sometimes response is missing day data,
+Other times, it is only missing data for a specific hour
+We need to map each hourly reading to a datetime, so we can map
+each cloud cover reading to a timestamp in the Uscrn Data pull
+"""
+
+
 def getDarkSkyCloudCoverForYear(year, lat, lon, key, units='si'):
 	cloudCoverByHour = {}
 	coords = '%0.2f,%0.2f' % (lat, lon)
@@ -159,8 +168,10 @@ def driver(dirName, lat, lon):
 if __name__ == "__main__":
 	_rawDataPath = os.path.join(os.getcwd(), 'Raw_Data')
 	_TestingPath = os.path.join(os.getcwd(), 'Testing_Data')
+	driver('Murphey_ID', 43.204,-116.75)
 	#PipeLine for Everglades, Florida
-	driver('Everglades_FL', 26.004157 ,-81.119239)
+	# driver('Everglades_FL', 26.004157 ,-81.119239)
+	# driver('outer_banks', 35.55,-75.46)
 	#Pipeline for Charlottesville
 	# if not os.path.exists(os.path.join(_TestingPath,'Charlottesville')):
 	# 	os.mkdir(os.path.join(_TestingPath,'Charlottesville'))
@@ -208,6 +219,23 @@ if __name__ == "__main__":
 	# 		year = int(i[-8:-4])
 	# 		print(year)
 	# 		pipeline(47.41,-117.52, year, sourcePath, targetPath)
+
+	# Pipeline for outer banks
+	# Create target Directory if don't exist
+	# if not os.path.exists(os.path.join(_TestingPath,'outer_banks')):
+	# 	os.mkdir(os.path.join(_TestingPath,'outer_banks'))
+	# 	print("Directory " , os.path.join(_TestingPath,'outer_banks') ,  " Created ")
+	# else:    
+	# 	print("Directory " , os.path.join(_TestingPath,'outer_banks') ,  " already exists")
+	# for i in os.listdir(os.path.join(_rawDataPath, 'outer_banks')):
+	# 	if i.endswith('csv'):
+	# 		sourcePath = (os.path.join(_rawDataPath,'outer_banks',i))
+	# 		print(sourcePath)
+	# 		targetPath = os.path.join(_TestingPath,'outer_banks', i[4:])
+	# 		print(targetPath)
+	# 		year = 2018
+	# 		print(year)
+	# 		pipeline(35.55,-75.46, year, sourcePath, targetPath)
 
 
 	
