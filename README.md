@@ -1,5 +1,7 @@
 # Solar Irradience Predictor
 
+This repository explores various machine learning techniques such as MLR techniques, deep neural networks, and clustering in order to predict solar irrandience DHI and DNI from open source weather forecast data.
+
 ## Overview
 
 Solar Irradience is measured in several different ways. 
