@@ -168,7 +168,8 @@ def driver(dirName, lat, lon):
 if __name__ == "__main__":
 	_rawDataPath = os.path.join(os.getcwd(), 'Raw_Data')
 	_TestingPath = os.path.join(os.getcwd(), 'Testing_Data')
-	driver('Boulder_CO', 40.035,-105.54)
+	# driver('Boulder_CO', 40.035,-105.54)
+	driver('Miami_FL', 25.7617, -80.1918)
 	#PipeLine for Everglades, Florida
 	# driver('Everglades_FL', 26.004157 ,-81.119239)
 	# driver('outer_banks', 35.55,-75.46)
