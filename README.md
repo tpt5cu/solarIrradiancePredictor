@@ -1,6 +1,16 @@
 # Solar Irradience Predictor
 
-This repository explores various machine learning techniques such as MLR techniques, deep neural networks, and clustering in order to predict solar irrandience DHI and DNI from open source weather forecast data.
+
+This repository explores various machine learning techniques to predict solar irrandience **DHI** and **DNI** from a GHI reading and other metoerological parameters.
+
+
+- [And a table of contents](#and-a-table-of-contents)
+- [On the right](#on-the-right)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+
+
 
 ## Overview
 
