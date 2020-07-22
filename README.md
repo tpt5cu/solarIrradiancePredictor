@@ -35,6 +35,32 @@ Formally, GHI can be constructed with DHI and DNI as follows:
 
 ## Past Approaches and Literature Review
 
+Previous approaches come in predominantly two categories: parametric and decomposition models.
+
+Parametric models use meterological data of solar irradience, cloud cover, atmospheric turbidity, pressure, and others to estimate DNI. Parametric models tend to require lots of detailed data on weather information. Often times this extensive data is not readily avaliable.
+
+Decomposition models rely on statistical relationships between GHI, DHI, and DNI to derive and predict DNI. Decomposition models require far less data, typically only requiring GHI to make a prediction. 
+
+
+Most of the past approaches consisted of predominantly decomposition models: such as Maxwell[6], Bristow[4], and Lee[3]. These papers also reference other decomposition models including Lee, Reindl-2, and Vignola and McDaniels. 
+
+Newer approaches take a hybrid approach of parametric and decomposition models. These include Lou[1], a Quasi-Physical model in Lee[3], and modeling done in **this repository**.
+
+
+### Decomposition models
+
+Decomposition models have been quite popular for this problem. One of the most popular models is the DISC model formalized by Maxwell[6]. The DISC model is a quasi-physical model which is similair to Lee[3]. These will be discussed later in the Parametric models section. 
+
+An example of a true decomposition models (or physical models) is 
+but have routinely been subject to compatability problems. A model that works well on some localized data tends not to work well on generalized data. Bindi[5] compares several models on different locations and found that there is large inter-site variability in prediction accuracy. This variation increases as the time resolution decreases.
+
+
+### Parametric and Quasi-Physical Models
+
+
+
+
+
 
 While previous approaches (see [pvlib](https://pvlib-python.readthedocs.io/en/stable/generated/pvlib.irradiance.disc.html)) have tried to derive mathematical models of being able to estimate DHI given GHI, cloud cover, and other various parameters, this repo intends to use statistical and machine learning techniques to estimate DHI with open source data and APIs. 
 
@@ -64,7 +90,7 @@ Because of heteroscedasticity, data transformations were necessary.
 
 ## References
 
-[1] Lou, S., Li, D. H. W., Lam, J. C., & Chan, W. W. H. (2016). Prediction of diffuse solar irradiance using machine learning and multivariable regression. Applied Energy, 181, 367–374. doi:10.1016/j.apenergy.2016.08.093 
+<a name="myfootnote1">1</a>:Lou, S., Li, D. H. W., Lam, J. C., & Chan, W. W. H. (2016). Prediction of diffuse solar irradiance using machine learning and multivariable regression. Applied Energy, 181, 367–374. doi:10.1016/j.apenergy.2016.08.093 
 
 https://www.sciencedirect.com/science/article/abs/pii/S0306261916311916
 
