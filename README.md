@@ -7,7 +7,7 @@ This repository explores various machine learning techniques to predict solar ir
 
 [1. Overview](#Overview)  
 [2. Past Approaches and Literature Review](#Past-Approaches-and-Literature-Review)  
-[3. Data ](#Data)
+[3. Data ](#Data)  
 [8. References](#References)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
