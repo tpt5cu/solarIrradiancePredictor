@@ -33,13 +33,21 @@ Formally, GHI can be constructed with DHI and DNI as follows:
 
 **Global Horizontal (GHI) = Direct Normal (DNI) X cos(θ) + Diffuse Horizontal (DHI)**
 
+![Alt text](ghi-dhi-dni-visual.png?raw=true "ghi-dhi-dni-visual")
+
+
+For more information about GHI, DNI, and DHI, please visit [this link](https://firstgreenconsulting.wordpress.com/2012/04/26/differentiate-between-the-dni-dhi-and-ghi/#:~:text=Global%20Horizontal%20Irradiance%20(GHI)) 
+
+
 ## Past Approaches and Literature Review
+
+This section briefly outlines a few approaches to predicting DHI and DNI from GHI. It is not an exhaustive literature review.
 
 Previous approaches come in predominantly two categories: parametric and decomposition models.
 
 Parametric models use meterological data of solar irradience, cloud cover, atmospheric turbidity, pressure, and others to estimate DNI. Parametric models tend to require lots of detailed data on weather information. Often times this extensive data is not readily avaliable.
 
-Decomposition models rely on statistical relationships between GHI, DHI, and DNI to derive and predict DNI. Decomposition models require far less data, typically only requiring GHI to make a prediction. 
+Decomposition models rely on statistical relationships between GHI, DHI, and DNI to derive and predict DNI. Decomposition models (or Physical models) require far less data, typically only requiring GHI to make a prediction. 
 
 
 Most of the past approaches consisted of predominantly decomposition models: such as Maxwell[6], Bristow[4], and Lee[3]. These papers also reference other decomposition models including Lee, Reindl-2, and Vignola and McDaniels. 
@@ -51,20 +59,28 @@ Newer approaches take a hybrid approach of parametric and decomposition models. 
 
 Decomposition models have been quite popular for this problem. One of the most popular models is the DISC model formalized by Maxwell[6]. The DISC model is a quasi-physical model which is similair to Lee[3]. These will be discussed later in the Parametric models section. 
 
-An example of a true decomposition models (or physical models) is 
-but have routinely been subject to compatability problems. A model that works well on some localized data tends not to work well on generalized data. Bindi[5] compares several models on different locations and found that there is large inter-site variability in prediction accuracy. This variation increases as the time resolution decreases.
+An example of a true decomposition models (or physical models) is the **Bristow[4]** model. The Bristow model proposes an equation to seperate total solar irradiation (GHI) into its direct and diffuse components. The model is based on physically determined coefficients based on total daily solar irradiance and the Gates equation for potential solar radiation. The model was tested in Washington State and Queensland, Australia. The model was shown to RMS deviations from the predicted values were less than 1.6 MJ/day no matter the weather conditions. During our tests, the model was shown not to have predictive power at the hourly interval or in the test locations we chose. 
+
+Decomposition modelshave routinely been subject to compatability problems. A model that works well on some localized data tends not to work well on generalized data. Bindi[5] compares several models on different locations and found that there is large inter-site variability in prediction accuracy. This variation increases as the time resolution decreases.
 
 
 ### Parametric and Quasi-Physical Models
 
 
+Quasi-decomposition (physical) models such as the Maxwell model[6] are built primarily on physical equations of irradience, but derived various coefficients from regression analysis of direct and global clearness indidces. The model was tested on several locations, with a RMSE not lower than 15% of actual DNI value. Additionally, the DISC model also measured monthly values. We desire higher resolution measurement and prediction. PVlib developed by NREL [has a good overview of and code for the DISC model](https://pvlib-python.readthedocs.io/en/stable/generated/pvlib.irradiance.disc.html)
 
 
+An extension of the Maxwell[6] model is the Lee[3] model. The Lee[3] model builds upon the physical components of the Maxwell[6] model, but uses different step-wise regression techniques with local data from Daejon, South Korea to derive their model's coefficients. They found that the Maxwell[6] model had too large error and could not handle outliers well. They noted a 13.1% decrease in RMSE as compared to the Maxwell[6] model. The authors posit their model could be used for most East-Asian regions
 
 
-While previous approaches (see [pvlib](https://pvlib-python.readthedocs.io/en/stable/generated/pvlib.irradiance.disc.html)) have tried to derive mathematical models of being able to estimate DHI given GHI, cloud cover, and other various parameters, this repo intends to use statistical and machine learning techniques to estimate DHI with open source data and APIs. 
+A 'pure' parametric model is the Lou[1] model. The Lou[1] model used the clearness index, solar altitude, air temperature, cloud cover and visibility as predictors for DHI. They trained a logistic regression model on data from Hong Kong and Denver, CO from the years 2008-2013. They found that the Mean Average Error (MAE) for Hong Kong was less than 21.5 w/m^2 and for Denver was less than 30 w/m^2.
 
-This technique allows for a more generalized model with minimal parameters, which reduces technical overhead. 
+
+In the spirit of Lou's[1] Model, we seek to use machine learning techniques, polynomial non-linear regression and a deep neural network to predict DHI. From DHI, we will use the physical equation defined above to derive DNI.
+
+We believe the sparse connections amongst features and the heteroscedastic property of GHI and DHI data make physical models difficult with too much variablity in error and too little generality. We seek to build a general model that can be used regardless of location on earth. Our general model will be trained on open source data, and will utilize public local weather data to generate predictions. 
+
+
 
 ## Data
 
@@ -90,7 +106,7 @@ Because of heteroscedasticity, data transformations were necessary.
 
 ## References
 
-<a name="myfootnote1">1</a>:Lou, S., Li, D. H. W., Lam, J. C., & Chan, W. W. H. (2016). Prediction of diffuse solar irradiance using machine learning and multivariable regression. Applied Energy, 181, 367–374. doi:10.1016/j.apenergy.2016.08.093 
+[1] Lou, S., Li, D. H. W., Lam, J. C., & Chan, W. W. H. (2016). Prediction of diffuse solar irradiance using machine learning and multivariable regression. Applied Energy, 181, 367–374. doi:10.1016/j.apenergy.2016.08.093 
 
 https://www.sciencedirect.com/science/article/abs/pii/S0306261916311916
 
