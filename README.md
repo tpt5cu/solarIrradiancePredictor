@@ -106,6 +106,32 @@ For real time meterological data, [darksky](https://darksky.net/dev) is again us
 
 ## Approach
 
+
+### Statistical Approach
+
+
+Initially a statistical fitting of GHI vs. DHI was introduced. However due to heteroscedasticity, a second explanatory variable, Cloud Cover, was introduced to try and improve prediction power. To try and normalize the feature variable distributions, zero values for GHI (for example, readings during night time hours), were removed. To improve heteroscedasticity issues, the feature variables GHI and Cloud Cover were log-transformed. The following statistical models were constructed. 
+
+
+
+1. Polynomial fit on log transformation of DHI  
+2. OLS fit on Log transformation of feature variables and log transformation of response variable  
+3. OLS fit on a power transformation of all variables
+4. OLS fit on sqrt transformation of all variables
+5. OLS fit on logit transformation of cloud cover and log transformation of GHI
+6. Genralized Least Squares model on log transformation of GHI values  
+7. GLS model on log transformation of GHI and DHI
+8. Weighted Least Squares model on log transformation of GHI and DHI. Cloud Cover is normal  
+9. Polynomial fit on Log transformation of feature variables  
+10. Polynomial fit on Log transformation of all variables  
+
+rmse is  0.5118593177162724
+r2 is  0.744334589378747
+mean absolute error is  0.4313808973773106
+mean squared log error is  0.012859520120319393
+median absolute error is  0.41262900659752355
+MAPE is  inf
+
 The full modeling approach is conducted and documented in 'statistical_irradience_modeling.ipynb'. 
 
 To summarize, the notebook pulls in 'base case' data, and tries to initially fit a robust model from that. In this case, the 'base case' is psm data from South Dakota in 2018. 2018 was chosen as a base year because for nearly all locations sampled, 2018 had a much higher resolution and much more accurate sample of cloud cover data (from darksky) for each hour of the year. For example, darksky cloud cover data appears to be bucketed in pre-2018 years, whereas 2018 onwards cloud cover is more continuous. Absolute zero values of GHI were removed because a reading of absolute 0 typically would mean a nighttime reading. Night time values combined with a cloud cover reading would skew the model. 
