@@ -3,6 +3,8 @@
 
 This repository explores various machine learning techniques to predict solar irrandience **DHI** and **DNI** from a GHI reading and other metoerological parameters. Finally we propose a new deep learning method to predict DHI from a GHI and several weather parameters. DNI can be extracted mathematically from these two values. The deep neural network was shown to predict DHI with a Mean Absolute Error (MAE) of 4 (w/m^2) to 12 (w/m^2). Which 1%-3% of the maximum value of DHI values (which range from 0-400 in my training data sets)
 
+This model is trained on synthetic historical data but uses open source, real time data measurements to make predictions. 
+
 ## Table of Contents
 
 [1. Overview](#Overview)  
@@ -84,11 +86,23 @@ We believe the sparse connections amongst features and the heteroscedastic prope
 
 ## Data
 
-Data was pulled from two sources. 
+Data was pulled from two sources, the [National Solar Radiation Database](https://nsrdb.nrel.gov/) and [darksky](https://darksky.net/dev). 
 
-Solar Irradience data was pulled from the [National Solar Radiation Database](https://nsrdb.nrel.gov/). Pointwise GHI, DHI, and DNI data is returned hourly for an entire calendar year. All irradience values are recorded in w/m^2. Location is for a latitude longitude coordinate pair. Coordinates were chosen based on the locations of [U.S. Climate Reference Network (USCRN)](https://www.ncdc.noaa.gov/crn/) monitoring stations. This is because the USCRN has real time measurements of GHI, which can be used to make real-time predictions of DHI. The NRSDB is not updated so frequently. 
 
-In addition to solar irradience data, this project uses other weather data such as cloud cover, air pressure, and season data to try and model the relationship between GHI and DHI. For that, this project pulls data from [darksky](https://darksky.net/dev).
+[National Solar Radiation Database](https://nsrdb.nrel.gov/) data is a collection of hourly [TMY](https://nsrdb.nrel.gov/about/tmy.html) datasets containing meteorological data and the three most common measurements of solar radiation: global horizontal, direct normal and diffuse horizontal irradiance. The data is synthetic in that GHI and DHI are modeled from the [REST2](https://www.solarconsultingservices.com/rest2.php) and FARMS models. 
+
+NRSDB data sets include a qualitative measurement for cloud cover but not a numeric. Therefore, numeric cloud cover data as a percentage is fetched from [darksky](https://darksky.net/dev). 
+
+The directory `Raw_Data` contains annual hourly raw psm (Physical Solar Model) data for a year for various locations. Locations involved with training have raw data for the years 2010-2018. A date pipeline called `data_munger.py` fetches from [darksky](https://darksky.net/dev) the numerical cloud cover readings, and inserts them at the correct time intervals into the raw data set. The raw data set is then transformed into the correct format for training and written into `Test_Data`. 
+
+**Please Note**, not all of the data in `Test_Data` is used solely for testing. In the `statistical_irradience_modeling.ipynb` notebook, regression analysis is conducted on a single location for a single year, but tested on multiple locations for multiple years. Likewise in the neural network model, data from multiple locations for years 2010-2018 is used to train the model, but then other locations are used to test the model. 
+
+
+Because data from the [NRSDB](https://nsrdb.nrel.gov/) is both synthetic and updated only annually, more recent data calls are required to make up to date, recent, or even real time predictions.
+
+For production environments, GHI data from [U.S. Climate Reference Network (USCRN)](https://www.ncdc.noaa.gov/crn/) monitoring stations will be used. This is because the USCRN has real time measurements of GHI, which can be used to make real-time predictions of DHI. Much of the training data locations chosen to train the statistical models and the neural network were chosen based off of [U.S. Climate Reference Network (USCRN)](https://www.ncdc.noaa.gov/crn/) station locations. 
+For real time meterological data, [darksky](https://darksky.net/dev) is again used. 
+
 
 ## Approach
 
