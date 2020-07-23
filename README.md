@@ -110,7 +110,9 @@ For real time meterological data, [darksky](https://darksky.net/dev) is again us
 ### Statistical Approach
 
 
-Initially a statistical fitting of GHI vs. DHI was introduced. However due to heteroscedasticity, a second explanatory variable, Cloud Cover, was introduced to try and improve prediction power. To try and normalize the feature variable distributions, zero values for GHI (for example, readings during night time hours), were removed. To improve heteroscedasticity issues, the feature variables GHI and Cloud Cover were log-transformed. The following statistical models were constructed. 
+#### Fitting
+
+Initially a statistical fitting of GHI vs. DHI was introduced. However due to heteroscedasticity, a second explanatory variable, Cloud Cover, was introduced to try and improve prediction power. To try and normalize the feature variable distributions, zero values for GHI (for example, readings during night time hours), were removed. To improve heteroscedasticity issues, the feature variables GHI and Cloud Cover were log-transformed. The following statistical models were fitted on PSM data from Reliance, South Dakota for the year of 2018. 
 
 
 
@@ -125,12 +127,12 @@ Initially a statistical fitting of GHI vs. DHI was introduced. However due to he
 9. Polynomial fit on Log transformation of feature variables  
 10. Polynomial fit on Log transformation of all variables  
 
-rmse is  0.5118593177162724
-r2 is  0.744334589378747
-mean absolute error is  0.4313808973773106
-mean squared log error is  0.012859520120319393
-median absolute error is  0.41262900659752355
-MAPE is  inf
+
+#### Validation
+
+The models were then validated on PSM data from Relaince, South Dakota for the year of 2017. 
+
+
 
 The full modeling approach is conducted and documented in 'statistical_irradience_modeling.ipynb'. 
 
