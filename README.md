@@ -10,10 +10,10 @@ This model is trained on synthetic historical data but uses open source, real ti
 [1. Overview](#Overview)  
 [2. Past Approaches and Literature Review](#Past-Approaches-and-Literature-Review)  
 [3. Data ](#Data) 
-[4. Approach](#Approach)
-[5. Conclusions](#Conclusions)
-[6. Future Work](#Future-Work) 
-[7. References](#References)
+[4. Approach](#Approach)  
+[5. Conclusions](#Conclusions)  
+[6. Future Work](#Future-Work)  
+[7. References](#References)  
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
