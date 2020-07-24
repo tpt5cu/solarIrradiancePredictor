@@ -75,7 +75,7 @@ Quasi-decomposition (physical) models such as the Maxwell model[6] are built pri
 An extension of the Maxwell[6] model is the Lee[3] model. The Lee[3] model builds upon the physical components of the Maxwell[6] model, but uses different step-wise regression techniques with local data from Daejon, South Korea to derive their model's coefficients. They found that the Maxwell[6] model had too large error and could not handle outliers well. They noted a 13.1% decrease in RMSE as compared to the Maxwell[6] model. The authors posit their model could be used for most East-Asian regions
 
 
-A 'pure' parametric model is the Lou[1] model. The Lou[1] model used the clearness index, solar altitude, air temperature, cloud cover and visibility as predictors for DHI. They trained a logistic regression model on data from Hong Kong and Denver, CO from the years 2008-2013. They found that the Mean Average Error (MAE) for Hong Kong was less than 21.5 w/m^2 and for Denver was less than 30 w/m^2.
+A 'pure' parametric model is the Lou[1] model. The Lou[1] model used the clearness index, solar altitude, air temperature, cloud cover and visibility as predictors for DHI. They trained a logistic regression model on data from Hong Kong and Denver, CO from the years 2008-2013. They found that the Mean Absolute Error (MAE) for Hong Kong was less than 21.5 w/m^2 and for Denver was less than 30 w/m^2.
 
 
 In the spirit of Lou's[1] Model, we seek to use machine learning techniques, polynomial non-linear regression and a deep neural network to predict DHI. From DHI, we will use the physical equation defined above to derive DNI.
@@ -112,6 +112,9 @@ For real time meterological data, [darksky](https://darksky.net/dev) is again us
 
 #### Fitting
 
+**The full modeling approach is conducted and documented in 'statistical_irradience_modeling.ipynb'.**
+
+
 Initially a statistical fitting of GHI vs. DHI was introduced. However due to heteroscedasticity, a second explanatory variable, Cloud Cover, was introduced to try and improve prediction power. To try and normalize the feature variable distributions, zero values for GHI (for example, readings during night time hours), were removed. To improve heteroscedasticity issues, the feature variables GHI and Cloud Cover were log-transformed. The following statistical models were fitted on PSM data from Reliance, South Dakota for the year of 2018. 
 
 
@@ -128,19 +131,39 @@ Initially a statistical fitting of GHI vs. DHI was introduced. However due to he
 10. Polynomial fit on Log transformation of all variables  
 
 
-#### Validation
+#### Validation, testing, and results
 
-The models were then validated on PSM data from Relaince, South Dakota for the year of 2017. 
+The models were then validated on PSM data from Relaince, South Dakota for the year of 2017. The polynomial regression with log transformation of GHI and DHI ended up being the best fit. The model had an r-squared value of 0.72 and a mean absolute error of 48.3 w/m2. 
+
+When tested on other locations in the usa for the years 2010-2018, the Polynomial model had a mean absolute percentage error of 30%-45%, when the predictions were exponentiated from log transformed space. 
+
+Overall even though the model had a fairly good fit, the outliers and heteroscedasticity caused simply too high of an average error to be useful. It is was found to be very difficult for a statistical model to fit the complex data shape. 
 
 
 
-The full modeling approach is conducted and documented in 'statistical_irradience_modeling.ipynb'. 
 
-To summarize, the notebook pulls in 'base case' data, and tries to initially fit a robust model from that. In this case, the 'base case' is psm data from South Dakota in 2018. 2018 was chosen as a base year because for nearly all locations sampled, 2018 had a much higher resolution and much more accurate sample of cloud cover data (from darksky) for each hour of the year. For example, darksky cloud cover data appears to be bucketed in pre-2018 years, whereas 2018 onwards cloud cover is more continuous. Absolute zero values of GHI were removed because a reading of absolute 0 typically would mean a nighttime reading. Night time values combined with a cloud cover reading would skew the model. 
+### Neural Network
 
-An intial plot of DHI vs. GHI, shows the data to be quite heteroscedastic. GHI and DHI data is definetly skewed towards lower values. Cloud cover appears to be two tailed.
+**The full approach and code for the neural network is in Neural_Net**
 
-Because of heteroscedasticity, data transformations were necessary.
+Enter the neural network. Because of sparse connections and the complex interactions of many different meterological parameters, a neural network was explored as an option to model and predict DHI. 
+
+
+The deep neural network was trained on 5 locations for the years 2010-2018 from 5 locations in the usa. Various meterological parameters were selected as input features including air pressure, solar zenith, month and day (to capture seasonality), and GHI. All these weather parameters are avaliable from the NRSDB or darksky. 
+
+
+
+#### Training
+
+The deep neural network performed surprisingly well. After 100 epochs of training, the neural network had a training set Mean Absolute Error (mae) of around only 4.27 w/m^2, with a Root Mean Squared Error (rmse) of around 10.5 w/m^2. Considering DHI values range from 0-400, those readings represent a 1%-2.5% error off range of values. 
+
+#### Validation and Testing
+
+The model was validated on data from the Outer Banks, NC for the year 2018. The model performed with an mae of 7.122 w/m^2 with an rmse of 16.4 w/m^2. Considering that the location chosen for validation was not in the training set nor is it similair to any of the training sets in terms of lcoation, the model performs surprisingly well. 
+
+The model was then tested on several other locations in the USA including Miami, Boulder, Lincoln, San Diego, Quinault, Oldtown, and Murphey for the 2018 year. With the exception of Miami and Boulder, the model had a mae of less than 8 w/m^2.
+
+Model specific networks were trained on 10 years of Boulder, CO and Miami, FL data with improvements in accuracy. 
 
 ## Conclusions
 
