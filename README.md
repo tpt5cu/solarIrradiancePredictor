@@ -9,8 +9,11 @@ This model is trained on synthetic historical data but uses open source, real ti
 
 [1. Overview](#Overview)  
 [2. Past Approaches and Literature Review](#Past-Approaches-and-Literature-Review)  
-[3. Data ](#Data)  
-[8. References](#References)
+[3. Data ](#Data) 
+[4. Approach](#Approach)
+[5. Conclusions](#Conclusions)
+[6. Future Work](#Future-Work) 
+[7. References](#References)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
@@ -167,7 +170,22 @@ Model specific networks were trained on 10 years of Boulder, CO and Miami, FL da
 
 ## Conclusions
 
+
+Our results show that the neural network model outperforms physical, quasi physical, and decomposition models for multiple locations and years. 
+
+Comparison with other models:
+
+-Lee[3] RMSE of 63.37 w/m^2 of Daejon, South Korea  
+-Lou[1] MAE of  <21.5 w/m^2 for HK and <30.0 w/m^2 for Denver over 5 years of data
+
+My model: MAE of <10 w/m^2 and RMSE of <15 w/m^ for several locatins in the usa over 10 years of data from 2010-2018.
+Several locations have slightly higher errors, but training location specific models can mitigate this issue. 
+
 ## Future Work
+
+-Verifying model on real-time/empirical data, not simulated or modeled  
+-Trying different network architectures to improve accuracy
+
 
 ## References
 
