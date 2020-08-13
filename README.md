@@ -1,4 +1,4 @@
-# Solar Irradience Prediction
+# Solar Irradiance Prediction
 
 
 This repository explores various machine learning techniques to predict solar irrandience **DHI** and **DNI** from a GHI reading and other metoerological parameters. Finally we propose a new deep learning method to predict DHI from a GHI and several weather parameters. DNI can be extracted mathematically from these two values. The deep neural network was shown to predict DHI with a Mean Absolute Error (MAE) of 4 (w/m^2) to 12 (w/m^2). Which 1%-3% of the maximum value of DHI values (which range from 0-400 in my training data sets)
@@ -22,9 +22,9 @@ This model is trained on synthetic historical data but uses open source, real ti
 
 With increased demand for solar energy, comes an increased need to ensure that solar energy plants are constructed in optimal locations, such as locations with a large amount of solar irradiance.
 
-Solar Irradience is measured in several different ways:
+Solar Irradiance is measured in several different ways:
 
-**Global Horizontal Irradience (GHI)** is total amount of shortwave radiation received from above by a surface horizontal to the ground. This value is of particular interest to photovoltaic installations and includes both Direct Normal Irradiance (DNI) and Diffuse Horizontal Irradiance (DHI).
+**Global Horizontal Irradiance (GHI)** is total amount of shortwave radiation received from above by a surface horizontal to the ground. This value is of particular interest to photovoltaic installations and includes both Direct Normal Irradiance (DNI) and Diffuse Horizontal Irradiance (DHI).
 
 **Direct Normal Irradiance (DNI)** is the amount of solar radiation received per unit area by a surface that is always held perpendicular (or normal) to the rays that come in a straight line from the direction of the sun at its current position in the sky.
 
