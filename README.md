@@ -9,7 +9,7 @@ This model is trained on synthetic historical data but uses open source, real ti
 
 [1. Overview](#Overview)  
 [2. Past Approaches and Literature Review](#Past-Approaches-and-Literature-Review)  
-[3. Data ](#Data) 
+[3. Data ](#Data)  
 [4. Approach](#Approach)  
 [5. Conclusions](#Conclusions)  
 [6. Future Work](#Future-Work)  
@@ -21,6 +21,10 @@ This model is trained on synthetic historical data but uses open source, real ti
 ## Overview
 
 With increased demand for solar energy, comes an increased need to ensure that solar energy plants are constructed in optimal locations, such as locations with a large amount of solar irradiance.
+
+Typically solar collectors are not mounted horizontally, but at an angle. It is necessary to calculate total solar radiation values on a tilted surface given values on a horizontal surface. It is not possible to just use trigonometric relationships. This is because diffuse radiation is anisotropic in the sky, and tilted solar collector will collect diffuse radiation differently depending on its orientation. [7]
+
+Additionally for concentrated solar thermal systems, we need to konw global and direct normal solar irradiance. [7]
 
 Solar Irradiance is measured in several different ways:
 
@@ -214,6 +218,12 @@ https://pdfs.semanticscholar.org/df09/12776bec14da57ae79752982df6274dd6e8b.pdf
 [6] Maxwell, E. L., “A Quasi-Physical Model for Converting Hourly Global Horizontal to Direct Normal Insolation”, Technical Report No. SERI/TR-215-3087, Golden, CO: Solar Energy Research Institute, 1987.
 
 https://www.nrel.gov/docs/legosti/old/3087.pdf
+
+[7]
+
+Boland, J., Huang, J., & Ridley, B. (2013). Decomposing global solar radiation into its direct and diffuse components. Renewable and Sustainable Energy Reviews, 28, 749–756. doi:10.1016/j.rser.2013.08.023
+
+https://www.researchgate.net/publication/270831639_Decomposing_global_solar_radiation_into_its_direct_and_diffuse_components
 
 
 
